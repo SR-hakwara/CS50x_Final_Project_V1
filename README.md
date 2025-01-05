@@ -10,6 +10,7 @@ This web application is designed to help users manage their projects and tasks e
 The application follows the **MVC (Model-View-Controller)** architecture, ensuring a clean separation of concerns. Data is stored in an **SQLite** database, making it lightweight and easy to deploy.
 
 ## Features
+![image](https://github.com/user-attachments/assets/df14a717-a5ae-4fe0-a914-93b3f26da632)
 
 ### Project Management
 - **Create Projects**: Add new projects with details like title, description, deadline, status, and priority.
