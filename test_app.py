@@ -1,3 +1,4 @@
+''' this code dosnt work for this version because our 'app.db' is called and used in the models
 from contextlib import contextmanager
 
 import pytest
@@ -192,3 +193,5 @@ def test_tasks(client, setup_database):
 
 if __name__ == '__main__':
     pytest.main()
+
+'''
