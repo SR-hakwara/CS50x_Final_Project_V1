@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Project{% endblock %}
+
+{% block main %}
+<div class="container mx-auto max-w-1xl">
+    <div class="card bg-base-100">
+        <div class="card-body">
+            <h2 class="card-title text-2xl mb-6">Edit Project</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{category}} mb-4">{{message}}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="{{url_for('edit_project', project_id=project.id)}}" method="post">
+                <!-- Title -->
+                <div class="form-control mb-4">
+                    <label class="label">
+                        <span class="label-text">Title *</span>
+                    </label>
+                    <input type="text" name="title" class="input input-bordered" required
+                           value="{{project.title}}">
+                </div>
+
+                <!-- Description -->
+                <div class="form-control mb-4">
+                    <label class="label">
+                        <span class="label-text">Description</span>
+                    </label>
+                    <textarea name="description" class="textarea textarea-bordered h-24">{{project.description}}</textarea>
+                </div>
+
+                <!-- Detailed Description -->
+                <div class="form-control mb-4">
+                    <label class="label">
+                        <span class="label-text">Detailed Description</span>
+                    </label>
+                    <textarea name="detailed_description" class="textarea textarea-bordered h-32">{{project.detailed_description}}</textarea>
+                </div>
+
+                <!-- Deadline -->
+                <div class="form-control mb-4">
+                    <label class="label">
+                        <span class="label-text">Deadline</span>
+                    </label>
+                    <input type="date" name="deadline" class="input input-bordered"
+                           value="{{project.deadline if project.deadline else ''}}">
+                </div>
+
+                <!-- Status -->
+                <div class="form-control mb-4">
+                    <label class="label">
+                        <span class="label-text">Status</span>
+                    </label>
+                    <select name="status" class="select select-bordered">
+                        <option value="to do" {% if project.status == 'to do' %}selected{% endif %}>To Do</option>
+                        <option value="in progress" {% if project.status == 'in progress' %}selected{% endif %}>In Progress</option>
+                        <option value="done" {% if project.status == 'done' %}selected{% endif %}>Done</option>
+                        <option value="blocked" {% if project.status == 'blocked' %}selected{% endif %}>Blocked</option>
+                    </select>
+                </div>
+
+                <!-- Priority -->
+                <div class="form-control mb-6">
+                    <label class="label">
+                        <span class="label-text">Priority</span>
+                    </label>
+                    <select name="priority" class="select select-bordered">
+                        <option value="low" {% if project.priority == 'low' %}selected{% endif %}>Low</option>
+                        <option value="medium" {% if project.priority == 'medium' %}selected{% endif %}>Medium</option>
+                        <option value="high" {% if project.priority == 'high' %}selected{% endif %}>High</option>
+                        <option value="urgent" {% if project.priority == 'urgent' %}selected{% endif %}>Urgent</option>
+                    </select>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex justify-end gap-4">
+                    <a href="{{ request.referrer or url_for('projects') }}" class="btn btn-ghost">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

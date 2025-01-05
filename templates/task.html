@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Task Details
+{% endblock %}
+
+{% block main %}
+<div class="container mx-auto">
+    <!-- Task Details -->
+
+        <div class="flex gap-2 justify-end">
+             <a href="{{ request.referrer or url_for('projects') }}" class="btn btn-primary btn-sm mb-2">
+                 <i class="fas fa-arrow-left mr-2"></i> Back
+             </a>
+        </div>
+
+    <div class="card bg-base-100 shadow-xl mb-8">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{category}} mb-4">{{message}}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div class="card-body">
+            <h2 class="card-title text-2xl font-bold mb-4">{{task.title}}</h2>
+            <p class="text-gray-600 mb-4">{{task.description}}</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <p class="text-sm text-gray-500"><strong>Detailed Description:</strong></p>
+                    <p class="text-gray-600">{{task.detailed_description}}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500"><strong>Status:</strong></p>
+                    <p class="text-gray-600">{{task.status}}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500"><strong>Priority:</strong></p>
+                    <p class="text-gray-600">{{task.priority}}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500"><strong>Deadline:</strong></p>
+                    <p class="text-gray-600">{{task.deadline.strftime('%Y-%m-%d %I:%M %p') if task.deadline else 'No
+                        deadline set'}}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500"><strong>Creation Date:</strong></p>
+                    <p class="text-gray-600">{{task.creation_date.strftime('%Y-%m-%d %I:%M %p')}}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500"><strong>Completed Date:</strong></p>
+                    <p class="text-gray-600">{{task.completed_date.strftime('%Y-%m-%d %I:%M %p') if task.completed_date
+                        else 'Not completed'}}</p>
+                </div>
+            </div>
+            <div class="card-actions justify-end mt-4">
+                <a href="{{url_for('edit_task', task_id=task.id)}}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-edit mr-2"></i> Edit Task
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Linked to the Task -->
+    {% if task.project_id %}
+    <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+            <h2 class="card-title text-2xl font-bold mb-4">Linked Project</h2>
+            <div class="space-y-4">
+                <div class="card bg-base-200 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="card-body p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <span class="font-medium">{{project.title}}</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <a href="{{url_for('project', project_id=project.id)}}" class="btn btn-ghost btn-xs">
+                                    <i class="fas fa-eye"></i> View Project
+                                </a>
+                            </div>
+                        </div>
+                        {% if project.description %}
+                        <p class="text-sm text-gray-600 mt-2">{{project.description}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

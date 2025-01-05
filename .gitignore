@@ -1,0 +1,36 @@
+# Environnements virtuels
+venv/
+.venv/
+
+# Fichiers de cache Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+
+# Fichiers de configuration et de données
+instance/
+.env
+*.db
+*.sqlite3
+app.db
+
+# Fichiers de session Flask
+flask_session/
+
+# Dossiers de dépendances JavaScript
+node_modules/
+
+# Fichiers spécifiques à l'IDE
+.idea/
+.vscode/
+
+# Fichiers de sauvegarde
+*~
+*.bak
+models.backup.py
+
+# Fichiers de logs
+*.log

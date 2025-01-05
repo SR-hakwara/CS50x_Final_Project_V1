@@ -1,0 +1,85 @@
+<!-- add_task.html -->
+{% extends "layout.html" %}
+
+{% block title %}Add Task{% endblock %}
+
+{% block main %}
+<div class="container mx-auto max-w-1xl">
+    <div class="card bg-base-100">
+        <div class="card-body">
+            <h2 class="card-title text-2xl mb-6">Add New Task</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{category}} mb-4">{{message}}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form action="{{url_for('add_task')}}" method="post">
+                <!-- Title -->
+                <div class="form-control mb-4">
+                    <label class="label">
+                        <span class="label-text">Title *</span>
+                    </label>
+                    <input type="text" name="title" class="input input-bordered" required>
+                </div>
+
+                <!-- Description -->
+                <div class="form-control mb-4">
+                    <label class="label">
+                        <span class="label-text">Description</span>
+                    </label>
+                    <textarea name="description" class="textarea textarea-bordered h-24"></textarea>
+                </div>
+
+                <!-- Detailed Description -->
+                <div class="form-control mb-4">
+                    <label class="label">
+                        <span class="label-text">Detailed Description</span>
+                    </label>
+                    <textarea name="detailed_description" class="textarea textarea-bordered h-32"></textarea>
+                </div>
+
+                <!-- Deadline -->
+                <div class="form-control mb-4">
+                    <label class="label">
+                        <span class="label-text">Deadline</span>
+                    </label>
+                    <input type="datetime-local" name="deadline" class="input input-bordered">
+                </div>
+
+                <!-- Project -->
+                <div class="form-control mb-4">
+                    <label class="label">
+                        <span class="label-text">Project</span>
+                    </label>
+                    <select name="project_id" class="select select-bordered">
+                        <option value="">No Project</option>
+                        {% for project in projects %}
+                        <option value="{{project.id}}">{{project.title}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Priority -->
+                <div class="form-control mb-6">
+                    <label class="label">
+                        <span class="label-text">Priority</span>
+                    </label>
+                    <select name="priority" class="select select-bordered">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex justify-end gap-4">
+                    <a href="{{ request.referrer or url_for('tasks') }}" class="btn btn-ghost">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Create Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

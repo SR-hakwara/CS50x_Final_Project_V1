@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block main %}
+<div class="container mx-auto max-w-1xl">
+    <div class="card bg-base-100">
+        <div class="card-body">
+            <h2 class="card-title text-2xl mb-6">Your Profile</h2>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} mb-4">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('profile') }}" method="POST">
+                <!-- Username -->
+                <div class="form-control mb-4">
+                    <label class="label">
+                        <span class="label-text">Username *</span>
+                    </label>
+                    <input type="text" id="username" name="username" class="input input-bordered" value="{{ session.get('user_name') }}" required>
+                </div>
+
+                <!-- Email -->
+                <div class="form-control mb-4">
+                    <label class="label">
+                        <span class="label-text">Email *</span>
+                    </label>
+                    <input type="email" id="email" name="email" class="input input-bordered" value="{{ session.get('user_email') }}" required>
+                </div>
+
+                <!-- New Password -->
+                <div class="form-control mb-4">
+                    <label class="label">
+                        <span class="label-text">New Password</span>
+                    </label>
+                    <input type="password" id="password" name="password" class="input input-bordered" placeholder="Enter new password">
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-control mb-6">
+                    <label class="label">
+                        <span class="label-text">Confirm Password</span>
+                    </label>
+                    <input type="password" id="confirm_password" name="confirm_password" class="input input-bordered" placeholder="Confirm new password">
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex justify-end gap-4">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

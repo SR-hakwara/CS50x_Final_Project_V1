@@ -1,0 +1,5 @@
+cs50~=9.4.0
+Flask~=3.1.0
+Flask-Session
+requests
+Werkzeug~=3.1.3
